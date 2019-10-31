@@ -43,10 +43,10 @@ SELECT a.au_id AS 'AUTHOR ID', a.au_lname AS 'LAST NAME', a.au_fname AS 'FIRST N
 
 
 # CHALLENGE 4: 23 best selling authors ranking
-SELECT a.au_id AS 'AUTHOR ID', a.au_lname AS 'LAST NAME', a.au_fname AS 'FIRST NAME', SUM(s.qty) AS 'TOTAL'
+SELECT a.au_id AS 'AUTHOR ID', a.au_lname AS 'LAST NAME', a.au_fname AS 'FIRST NAME', COALESCE(SUM(s.qty)) AS 'TOTAL'
 	FROM authors a
-	JOIN titleauthor ta ON ta.au_id=a.au_id
-	JOIN titles t ON ta.title_id=t.title_id
+	LEFT JOIN titleauthor ta ON ta.au_id=a.au_id
+	LEFT JOIN titles t ON ta.title_id=t.title_id
 	LEFT JOIN sales s ON s.title_id=t.title_id
 	GROUP BY a.au_id
 	ORDER BY SUM(s.qty) DESC
